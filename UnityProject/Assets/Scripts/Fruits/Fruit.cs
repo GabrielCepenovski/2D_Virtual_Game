@@ -28,16 +28,13 @@ public class Fruit : MonoBehaviour
         AdditionalAct(collector);
     }
 
+    public virtual void AdditionalAct(GameObject collector) { }
+
     private IEnumerator Collected()
     {
         _animator.SetBool("Collected", true);
         _collected.Invoke();
         yield return new WaitForSeconds(_waitDestroy);
         Destroy(gameObject);
-    }
-
-    public virtual void AdditionalAct(GameObject collector)
-    {
-
     }
 }
