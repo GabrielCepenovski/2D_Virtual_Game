@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Animator))]
-public class CollectedObject : MonoBehaviour
+public class Fruit : MonoBehaviour
 {
     [SerializeField] private float _waitDestroy = 0.25f;
 
@@ -22,10 +22,13 @@ public class CollectedObject : MonoBehaviour
         _colider.isTrigger = true;
     }
 
-    public void PlayerConnect()
+    public void PlayerConnect(GameObject collector)
     {
         StartCoroutine(Collected());
+        AdditionalAct(collector);
     }
+
+    public virtual void AdditionalAct(GameObject collector) { }
 
     private IEnumerator Collected()
     {
