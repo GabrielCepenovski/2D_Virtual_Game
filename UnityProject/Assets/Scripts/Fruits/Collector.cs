@@ -6,17 +6,20 @@ using UnityEngine.Events;
 public class Collector : MonoBehaviour
 {
     public UnityEvent _collected = new UnityEvent();
-    public int CountCollected => _countCollected;
+    public int CountCollected { get; private set; }
 
-    private int _countCollected;
+    private void Awake()
+    {
+        CountCollected = 0;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent<CollectedObject>(out CollectedObject collectedObject))
+        if(collision.TryGetComponent<Fruit>(out Fruit collectedObject))
         {
-            _countCollected++;
+            CountCollected++;
             _collected.Invoke();
-            collectedObject.PlayerConnect();
+            collectedObject.PlayerConnect(gameObject);
         }
     }
 }
