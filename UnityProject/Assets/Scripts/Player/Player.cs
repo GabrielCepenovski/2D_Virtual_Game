@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     [SerializeField] private ContactFilter2D _contactFilter;
     [SerializeField] private int _maxHealth = 4;
 
-    public UnityEvent _isDeath;
-
     public Twisted Twisted => _twisted;
     public bool IsAlive => _health > 0;
 
@@ -24,6 +22,8 @@ public class Player : MonoBehaviour
     private PlayerMover _playerMover;
     private readonly RaycastHit2D[] _hit = new RaycastHit2D[1];
     private int _health = 0;
+
+    public UnityEvent _isDeath;
 
     public void GetHit()
     {

@@ -9,10 +9,10 @@ public class Fruit : MonoBehaviour
 {
     [SerializeField] private float _waitDestroy = 0.25f;
 
-    public UnityEvent _collected;
-
     private Animator _animator;
     private Collider2D _colider;
+
+    public UnityEvent _collected;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class Fruit : MonoBehaviour
         _colider.isTrigger = true;
     }
 
-    public void PlayerConnect(GameObject collector)
+    public void Collected(GameObject collector)
     {
         StartCoroutine(Collected());
         AdditionalAct(collector);

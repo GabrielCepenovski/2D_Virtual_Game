@@ -5,8 +5,9 @@ using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
-    public UnityEvent _collected = new UnityEvent();
     public int CountCollected { get; private set; }
+
+    public UnityEvent _collected = new UnityEvent();
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class Collector : MonoBehaviour
         {
             CountCollected++;
             _collected.Invoke();
-            collectedObject.PlayerConnect(gameObject);
+            collectedObject.Collected(gameObject);
         }
     }
 }
