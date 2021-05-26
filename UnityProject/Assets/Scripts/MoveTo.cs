@@ -21,6 +21,9 @@ public class MoveTo : MonoBehaviour
 
     private void Update()
     {
+        if (_target == null)
+            return;
+
         Vector3 _targetPosition = ReplacementToZ(_target.position, transform.position.z);
 
         if (_targetLastPosition != _targetPosition)

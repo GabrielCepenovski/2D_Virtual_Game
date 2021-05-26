@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
-    public int CountCollected { get; private set; }
+    [SerializeField] private UnityEvent _Òollected¿ruit = new UnityEvent();
 
-    public UnityEvent _collected = new UnityEvent();
+    public int CountCollected { get; private set; }
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class Collector : MonoBehaviour
         if(collision.TryGetComponent<Fruit>(out Fruit collectedObject))
         {
             CountCollected++;
-            _collected.Invoke();
+            _Òollected¿ruit.Invoke();
             collectedObject.Collected(gameObject);
         }
     }
