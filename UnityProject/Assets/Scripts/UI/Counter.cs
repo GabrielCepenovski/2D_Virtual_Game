@@ -9,7 +9,7 @@ public class Counter : MonoBehaviour
     [SerializeField] private Text _text;
     [SerializeField] private float _duration;
 
-    public void OnCollected(int _count)
+    public void OnChange(int _count)
     {
         _text.DOText(_count.ToString(), _duration);
     }

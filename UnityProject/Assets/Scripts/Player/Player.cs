@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _waitDestroy = 0.6f;
     [SerializeField] private ContactFilter2D _contactFilter;
     [SerializeField] private int _maxHealth = 4;
+    [SerializeField] private UnityEvent _isDeath;
+    [SerializeField] private UnityEvent<int> _changeHealth;
 
     public Twisted Twisted => _twisted;
     public bool IsAlive => _health > 0;
@@ -23,14 +25,12 @@ public class Player : MonoBehaviour
     private readonly RaycastHit2D[] _hit = new RaycastHit2D[1];
     private int _health = 0;
 
-    public UnityEvent _isDeath;
-
     public void GetHit()
     {
         _playerAmimator.ChangeHit();
         _rigidbody2d.velocity = (Vector2.up + Vector2.left * (int)Twisted)  * _damageBust;
-        _health--;
-        if(_health<=0)
+        _changeHealth.Invoke(--_health);
+        if (_health<=0)
             StartCoroutine(Death());
     }
 
