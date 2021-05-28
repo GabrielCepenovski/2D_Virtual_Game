@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     public void ResetHealth()
     {
         _health = _maxHealth;
+        _changeHealth.Invoke(_health);
     }
 
     private void Awake()
