@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Player))]
 public class PlayerMover : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private int _additionalJumps = 1;
     [SerializeField] private float _jumpDelay = 0.2f;
     [SerializeField] private float _wallSpead = -1f;
+    [SerializeField] private UnityEvent _onJump;
 
     public bool IsGround { get; private set; }
     public float VerticalVelosity { get; private set; }
@@ -43,9 +45,12 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        Jump();
-        Wall();
+        if(_player.IsAlive)
+        {
+            Move();
+            Jump();
+            Wall();
+        }
 
         ParametrsUpdate();
     }
@@ -83,6 +88,8 @@ public class PlayerMover : MonoBehaviour
                 _rigidbody2d.velocity = Vector2.zero;
                 _rigidbody2d.velocity += Vector2.up * _jumpForce;
                 _jumpDelayTimer = 0;
+
+                _onJump.Invoke();
             }
             else if (_jumpDelayTimer > _jumpDelay && _jumpIndex < _additionalJumps)
             {
@@ -90,6 +97,8 @@ public class PlayerMover : MonoBehaviour
                 _rigidbody2d.velocity += Vector2.up * _jumpForce;
                 _jumpIndex++;
                 _jumpDelayTimer = 0;
+
+                _onJump.Invoke();
             }
         }
     }

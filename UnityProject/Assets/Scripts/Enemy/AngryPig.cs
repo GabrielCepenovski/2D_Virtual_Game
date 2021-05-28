@@ -12,6 +12,7 @@ public class AngryPig : MonoBehaviour
     [SerializeField] private float _patrolSpead = 2f;
     [SerializeField] private Animator _animator;
     [SerializeField] private float _waitDestroy = 0.6f;
+    [SerializeField] private UnityEvent _onHit;
 
     public int Health => _health;
     public bool IsAlive => _health > 0;
@@ -77,6 +78,8 @@ public class AngryPig : MonoBehaviour
                 _animator.SetTrigger("Hit");
                 _patrolSpead++;
                 _animator.SetInteger("Health",_health);
+
+                _onHit.Invoke();
 
                 if (_health <= 0)
                     StartCoroutine(Death());

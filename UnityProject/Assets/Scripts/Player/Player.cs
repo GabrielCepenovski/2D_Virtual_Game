@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _maxHealth = 4;
     [SerializeField] private UnityEvent _isDeath;
     [SerializeField] private UnityEvent<int> _changeHealth;
+    [SerializeField] private UnityEvent _onHit;
 
     public Twisted Twisted => _twisted;
     public bool IsAlive => _health > 0;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2d;
     private PlayerAmimator _playerAmimator;
     private PlayerMover _playerMover;
+    private Collector _collector;
     private readonly RaycastHit2D[] _hit = new RaycastHit2D[1];
     private int _health = 0;
 
@@ -29,7 +31,10 @@ public class Player : MonoBehaviour
     {
         _playerAmimator.ChangeHit();
         _rigidbody2d.velocity = (Vector2.up + Vector2.left * (int)Twisted)  * _damageBust;
+
+        _onHit.Invoke();
         _changeHealth.Invoke(--_health);
+
         if (_health<=0)
             StartCoroutine(Death());
     }
@@ -49,6 +54,7 @@ public class Player : MonoBehaviour
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _playerAmimator = GetComponent<PlayerAmimator>();
         _playerMover = GetComponent<PlayerMover>();
+        _collector = GetComponent<Collector>();
 
         _health = _maxHealth;
     }
@@ -56,6 +62,9 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         TwistedUpdate();
+
+        if (IsAlive == false)
+            _collector.enabled = false;
     }
 
     private void TwistedUpdate()
